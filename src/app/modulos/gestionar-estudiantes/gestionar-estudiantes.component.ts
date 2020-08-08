@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TipoSangreService } from '../../services/tipo-sangre.service';
 
 @Component({
   selector: 'app-gestionar-estudiantes',

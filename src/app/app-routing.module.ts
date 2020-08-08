@@ -4,6 +4,7 @@ import { GestionarEstudiantesComponent } from './modulos/gestionar-estudiantes/g
 import { GestionarEnfermedadesComponent } from './modulos/gestionar-enfermedades/gestionar-enfermedades.component';
 
 const routes: Routes = [
+  {path : '', component : GestionarEstudiantesComponent},
   {path : 'gestionar-estudiantes', component : GestionarEstudiantesComponent},
   {path : 'gestionar-enfermedades', component : GestionarEnfermedadesComponent},
 ];
