@@ -7,6 +7,7 @@ import { TipoIdentificacion } from './../../model/tipo-identificacion';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { MatDialogRef } from '@angular/material/dialog'
 
 
 @Component({
@@ -24,10 +25,11 @@ export class GuardarEstudiantesComponent implements OnInit {
     private servicioTipoSangre: TipoSangreService,
     private servicioTipoIdentificacion: TipoIdentificacionService,
     private servicioEstudiante: EstudianteService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public dialogRef: MatDialogRef<GuardarEstudiantesComponent>
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     this.inicializarFormulario();
     this.cargarTipoIdentificacion();
     this.cargarTipoSangre();
@@ -76,6 +78,7 @@ export class GuardarEstudiantesComponent implements OnInit {
 
     this.servicioEstudiante.registrar(estudiante).subscribe(res => {
       this.toastr.success('Se ha registrado el estudiante', 'CORRECTO');
+      this.dialogRef.close(true);
     }, error => {
       console.log("Ha ocurrido un error al registrar");
     })
