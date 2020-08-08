@@ -2,3 +2,8 @@
 
 @import 'bootstrap/dist/css/bootstrap.min.css';
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+
+mat-form-field{
+    width: 100%;
+}
