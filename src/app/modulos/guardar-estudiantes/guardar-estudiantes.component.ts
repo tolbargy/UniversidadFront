@@ -73,7 +73,7 @@ export class GuardarEstudiantesComponent implements OnInit {
         numeroIdentificacion: res.numeroIdentificacion,
         nombre: res.nombre,
         apellido: res.apellido,
-        fechaNacimiento: res.fechaNacimiento,
+        fechaNacimiento: new Date(`${res.fechaNacimiento} 00:00:00`),
         idTipoSangre: res.tipoSangre.id
       });
     }, error => {
