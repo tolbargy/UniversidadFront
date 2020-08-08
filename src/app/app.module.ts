@@ -16,6 +16,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
+import { ModalConfirmarEliminarComponent } from './modulos/modal-confirmar-eliminar/modal-confirmar-eliminar.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ToastrModule } from 'ngx-toastr';
     GestionarEstudiantesComponent,
     GestionarEnfermedadesComponent,
     GuardarEstudiantesComponent,
-    GuardarEnfermedadesComponent
+    GuardarEnfermedadesComponent,
+    ModalConfirmarEliminarComponent
   ],
   imports: [
     BrowserModule,

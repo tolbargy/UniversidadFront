@@ -1,8 +1,9 @@
+import { ToastrService } from 'ngx-toastr';
+import { ModalConfirmarEliminarComponent } from './../modal-confirmar-eliminar/modal-confirmar-eliminar.component';
 import { Estudiante } from './../../model/estudiante';
 import { EstudianteService } from './../../services/estudiante.service';
 import { GuardarEstudiantesComponent } from './../guardar-estudiantes/guardar-estudiantes.component';
 import { Component, OnInit } from '@angular/core';
-import { TipoSangreService } from '../../services/tipo-sangre.service';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -16,7 +17,8 @@ export class GestionarEstudiantesComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private servicioEstudiante: EstudianteService
+    private servicioEstudiante: EstudianteService,
+    private toast: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -42,6 +44,20 @@ export class GestionarEstudiantesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
         this.listarTodos();
+      }
+    });
+  }
+
+  public eliminar(id: number) {
+    const dialogRef = this.dialog.open(ModalConfirmarEliminarComponent);
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.servicioEstudiante.eliminar(id).subscribe(res => {
+          this.toast.success("Se ha eliminado el estudiante", "ELIMINADO")
+          this.listarTodos();
+        }, error => {
+          console.log("Ha ocurrido error al eliminar el estudiante");
+        });
       }
     });
   }
