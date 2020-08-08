@@ -15,8 +15,4 @@ export class TipoSangreService {
   listarTodos(){
     return this.http.get<TipoSangre[]>(this.path);
   }
-
-
-
-
 }

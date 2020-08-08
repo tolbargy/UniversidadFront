@@ -1,3 +1,6 @@
+import { EnfermedadEstudiante } from './../model/enfermedad-estudiante';
+import { environment } from './../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -5,5 +8,11 @@ import { Injectable } from '@angular/core';
 })
 export class EnfermedadEstudianteService {
 
-  constructor() { }
+  private path: string = environment.urlApi + "/enfermedad-estudiante";
+
+  constructor(private http: HttpClient) { }
+
+  listarTodos(){
+    return this.http.get<EnfermedadEstudiante[]>(this.path);
+  }
 }
