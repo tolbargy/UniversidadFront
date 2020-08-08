@@ -1,4 +1,5 @@
-<h2 mat-dialog-title>Nuevo Estudiante</h2>
+<h2 mat-dialog-title *ngIf="data.id == 0">Nuevo Estudiante</h2>
+<h2 mat-dialog-title *ngIf="data.id != 0">Actualizar Estudiante</h2>
 <mat-dialog-content>
     <form [formGroup]="formEstudiante">
         <div class="row">
@@ -58,5 +59,8 @@
 </mat-dialog-content>
 <mat-dialog-actions>
     <button class="btn btn-secondary mr-1" mat-dialog-close>Cancelar</button>
-    <button class="btn btn-success" [disabled]="!formEstudiante.valid" (click)="guardar()">Registrar</button>
+    <button class="btn btn-success" [disabled]="!formEstudiante.valid" (click)="guardar()"
+        *ngIf="data.id == 0">Registrar</button>
+    <button class="btn btn-primary" [disabled]="!formEstudiante.valid" (click)="guardar()"
+        *ngIf="data.id != 0">Actualizar</button>
 </mat-dialog-actions>

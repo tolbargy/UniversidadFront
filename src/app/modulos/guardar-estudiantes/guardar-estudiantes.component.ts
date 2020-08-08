@@ -4,10 +4,10 @@ import { TipoIdentificacionService } from './../../services/tipo-identificacion.
 import { TipoSangreService } from './../../services/tipo-sangre.service';
 import { TipoSangre } from './../../model/tipo-sangre';
 import { TipoIdentificacion } from './../../model/tipo-identificacion';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { MatDialogRef } from '@angular/material/dialog'
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 
 
 @Component({
@@ -26,16 +26,20 @@ export class GuardarEstudiantesComponent implements OnInit {
     private servicioTipoIdentificacion: TipoIdentificacionService,
     private servicioEstudiante: EstudianteService,
     private toastr: ToastrService,
-    public dialogRef: MatDialogRef<GuardarEstudiantesComponent>
+    public dialogRef: MatDialogRef<GuardarEstudiantesComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
     this.inicializarFormulario();
     this.cargarTipoIdentificacion();
     this.cargarTipoSangre();
+    if (this.data.id != 0) {
+      this.cargarDatos();
+    }
   }
 
-  inicializarFormulario() {
+  private inicializarFormulario() {
     this.formEstudiante = new FormGroup({
       idTipoIdentificacion: new FormControl(null, Validators.required),
       numeroIdentificacion: new FormControl(null, Validators.required),
@@ -62,6 +66,21 @@ export class GuardarEstudiantesComponent implements OnInit {
     });
   }
 
+  private cargarDatos() {
+    this.servicioEstudiante.listarPorId(this.data.id).subscribe(res => {
+      this.formEstudiante.setValue({
+        idTipoIdentificacion: res.tipoIdentificacion.id,
+        numeroIdentificacion: res.numeroIdentificacion,
+        nombre: res.nombre,
+        apellido: res.apellido,
+        fechaNacimiento: res.fechaNacimiento,
+        idTipoSangre: res.tipoSangre.id
+      });
+    }, error => {
+      console.log("Error al buscar el estudiante");
+    });
+  }
+
   public guardar() {
     let tipoIdentificacion: TipoIdentificacion = new TipoIdentificacion();
     tipoIdentificacion.id = this.formEstudiante.controls['idTipoIdentificacion'].value;
@@ -76,12 +95,30 @@ export class GuardarEstudiantesComponent implements OnInit {
     estudiante.fechaNacimiento = this.formEstudiante.controls['fechaNacimiento'].value;
     estudiante.tipoSangre = tipoSangre;
 
+    if (this.data.id == 0) {
+      this.registrar(estudiante);
+    } else {
+      estudiante.id = this.data.id;
+      this.actualizar(estudiante);
+    }
+  }
+
+  private registrar(estudiante: Estudiante) {
     this.servicioEstudiante.registrar(estudiante).subscribe(res => {
       this.toastr.success('Se ha registrado el estudiante', 'CORRECTO');
       this.dialogRef.close(true);
     }, error => {
       console.log("Ha ocurrido un error al registrar");
-    })
+    });
+  }
+
+  private actualizar(estudiante: Estudiante) {
+    this.servicioEstudiante.actualizar(estudiante).subscribe(res => {
+      this.toastr.success('Se ha actualizado el estudiante', 'CORRECTO');
+      this.dialogRef.close(true);
+    }, error => {
+      console.log("Ha ocurrido un error al actualizar");
+    });
   }
 
 }

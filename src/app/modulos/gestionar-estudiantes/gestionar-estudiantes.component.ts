@@ -1,3 +1,5 @@
+import { Estudiante } from './../../model/estudiante';
+import { EstudianteService } from './../../services/estudiante.service';
 import { GuardarEstudiantesComponent } from './../guardar-estudiantes/guardar-estudiantes.component';
 import { Component, OnInit } from '@angular/core';
 import { TipoSangreService } from '../../services/tipo-sangre.service';
@@ -10,19 +12,37 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class GestionarEstudiantesComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  public listaEstudiantes: Estudiante[] = [];
+
+  constructor(
+    public dialog: MatDialog,
+    private servicioEstudiante: EstudianteService
+  ) { }
 
   ngOnInit(): void {
+    this.listarTodos();
   }
 
-  modalGuardarEstudiante(id: number) {
-    const dialogRef = this.dialog.open(GuardarEstudiantesComponent,{
-      height: '700px',
-      width: '800px'
+  private listarTodos() {
+    this.servicioEstudiante.listarTodos().subscribe(res => {
+      this.listaEstudiantes = res;
+    }, error => {
+      console.log("Ha ocurrido un error al cargar los estudiantes");
     });
+  }
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+  public modalGuardarEstudiante(id: number) {
+    const dialogRef = this.dialog.open(GuardarEstudiantesComponent, {
+      height: '700px',
+      width: '800px',
+      data: {
+        id: id
+      }
+    });
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        this.listarTodos();
+      }
     });
   }
 
