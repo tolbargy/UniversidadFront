@@ -1,1 +1,18 @@
 <button class="btn btn-success" (click)="modalGuardarEnfermedad(0)">Nueva enfermedad</button>
+
+<table class="table table-hover mt-4">
+    <thead>
+        <tr>
+            <th>Estudiante</th>
+            <th>Nombre enfermedad</th>
+            <th>Observacion</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of enfermedades">
+            <td>{{item.estudiante.numeroIdentificacion}} - {{item.estudiante.nombre}} {{item.estudiante.apellido}}</td>
+            <td>{{item.nombre}}</td>
+            <td>{{item.observacion}}</td>
+        </tr>
+    </tbody>
+</table>

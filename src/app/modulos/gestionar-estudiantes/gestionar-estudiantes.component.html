@@ -12,8 +12,8 @@
             <th>Acciones</th>
         </tr>
     </thead>
-    <tbody *ngFor="let item of listaEstudiantes">
-        <tr>
+    <tbody>
+        <tr *ngFor="let item of listaEstudiantes">
             <td>{{item.tipoIdentificacion.nombre}}</td>
             <td>{{item.numeroIdentificacion}}</td>
             <td>{{item.nombre}}</td>

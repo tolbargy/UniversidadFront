@@ -1,3 +1,5 @@
+import { EnfermedadEstudianteService } from './../../services/enfermedad-estudiante.service';
+import { EnfermedadEstudiante } from './../../model/enfermedad-estudiante';
 import { GuardarEnfermedadesComponent } from './../guardar-enfermedades/guardar-enfermedades.component';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -10,9 +12,15 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class GestionarEnfermedadesComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  public enfermedades: EnfermedadEstudiante[] = [];
+
+  constructor(
+    public dialog: MatDialog,
+    private servicioEnfermedad: EnfermedadEstudianteService
+  ) { }
 
   ngOnInit(): void {
+    this.listarTodos();
   }
 
   public modalGuardarEnfermedad(id: number) {
@@ -29,7 +37,11 @@ export class GestionarEnfermedadesComponent implements OnInit {
   }
 
   private listarTodos() {
-
+    this.servicioEnfermedad.listarTodos().subscribe(res => {
+      this.enfermedades = res;
+    }, error => {
+      console.log("Ha ocurrido un error al listar las enfermedades");
+    });
   }
 
 }
