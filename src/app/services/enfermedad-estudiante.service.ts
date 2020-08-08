@@ -12,7 +12,13 @@ export class EnfermedadEstudianteService {
 
   constructor(private http: HttpClient) { }
 
-  listarTodos(){
+  listarTodos() {
     return this.http.get<EnfermedadEstudiante[]>(this.path);
   }
+
+  registrar(entidad: EnfermedadEstudiante) {
+    return this.http.post<void>(this.path, entidad);
+  }
+
+
 }
