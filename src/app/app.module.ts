@@ -14,6 +14,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
     MatInputModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    ReactiveFormsModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'es'}
