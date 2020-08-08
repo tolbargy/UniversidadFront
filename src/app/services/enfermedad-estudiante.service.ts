@@ -20,5 +20,9 @@ export class EnfermedadEstudianteService {
     return this.http.post<void>(this.path, entidad);
   }
 
+  listarPorIdEstudiante(idEstudiante: number) {
+    return this.http.get<EnfermedadEstudiante[]>(`${this.path}/listarPorIdEstudiante/${idEstudiante}`);
+  }
+
 
 }

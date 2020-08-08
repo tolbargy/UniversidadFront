@@ -1,5 +1,22 @@
 <button class="btn btn-success" (click)="modalGuardarEnfermedad(0)">Nueva enfermedad</button>
 
+<div class="row mt-4">
+    <div class="col-6">
+        <mat-form-field>
+            <mat-label>Estudiante</mat-label>
+            <mat-select [formControl]=idEstudiante>
+                <mat-option *ngFor="let item of estudiantes" [value]="item.id">
+                    {{item.numeroIdentificacion}} - {{item.nombre}} {{item.apellido}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="col-6">
+        <button class="btn btn-primary" (click)="filtrar()" [disabled]="!idEstudiante.value">FILTRAR</button>
+    </div>
+</div>
+
+
 <table class="table table-hover mt-4">
     <thead>
         <tr>
